@@ -39,7 +39,7 @@ namespace APIBooks.Services.Books
                            Titulo = book.Titulo,
                            Editorial = book.Editorial,
                            Autor = book.Autor,
-                           FechaPublicacion = book.FechaPublicacion,
+                           FechaPublicacion = book.FechaPublicacion.ToString("dd/M/yyyy"),
                            Precio = book.Precio
                        };
 
@@ -53,7 +53,7 @@ namespace APIBooks.Services.Books
                 Titulo = book.Titulo,
                 Editorial = book.Editorial,
                 Autor = book.Autor,
-                FechaPublicacion = book.FechaPublicacion,
+                FechaPublicacion = Convert.ToDateTime(book.FechaPublicacion),
                 Precio = book.Precio
             });
 
@@ -67,10 +67,11 @@ namespace APIBooks.Services.Books
             var recentBook = await DbContext.Libros.FindAsync(id);
 
             recentBook.LibroId = id;
-            recentBook.Titulo = book.Titulo == null ? recentBook.Titulo : book.Titulo;
-            recentBook.Autor = book.Autor == null ? recentBook.Autor : book.Autor;
-            recentBook.Editorial = book.Editorial == null ? recentBook.Editorial : book.Editorial;
-            recentBook.FechaPublicacion = book.FechaPublicacion;
+            recentBook.Titulo = book.Titulo == "" ? recentBook.Titulo : book.Titulo;
+            recentBook.Autor = book.Autor == "" ? recentBook.Autor : book.Autor;
+            recentBook.Editorial = book.Editorial == "" ? recentBook.Editorial : book.Editorial;
+            recentBook.FechaPublicacion = book.FechaPublicacion == "" ? recentBook.FechaPublicacion : Convert.ToDateTime(book.FechaPublicacion);
+            recentBook.Precio = book.Precio; 
 
             DbContext.Update(recentBook);
 

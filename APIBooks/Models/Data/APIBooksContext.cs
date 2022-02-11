@@ -34,9 +34,6 @@ namespace APIBooks.Models.Data
             {
                 entity.ToTable("Libro");
 
-                entity.HasIndex(e => e.Autor, "UQ__Libro__41C60C60F64C7162")
-                    .IsUnique();
-
                 entity.Property(e => e.LibroId).HasColumnName("libroId");
 
                 entity.Property(e => e.Autor)

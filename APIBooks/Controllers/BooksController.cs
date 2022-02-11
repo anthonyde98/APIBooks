@@ -25,8 +25,9 @@ namespace APIBooks.Controllers
         {
             try
             {
+                var books = await BookManager.Buscar();
 
-                return Ok();
+                return Ok(books);
             }
             catch (Exception ex)
             {
@@ -40,8 +41,14 @@ namespace APIBooks.Controllers
         {
             try
             {
+                var respuesta = await BookManager.Existe(id);
 
-                return Ok();
+                if (!respuesta)
+                    return NotFound();
+
+                var book = await BookManager.Buscar(id);
+
+                return Ok(book);
             }
             catch (Exception ex)
             {
@@ -51,12 +58,13 @@ namespace APIBooks.Controllers
 
         // POST api/<BooksController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] string b)
+        public async Task<IActionResult> Post([FromBody] Models.DTOs.Book.Book book)
         {
             try
             {
+                var Book = await BookManager.Crear(book);
 
-                return Created("", b);
+                return Created("Book created successfully.", Book);
             }
             catch (Exception ex)
             {
@@ -66,12 +74,18 @@ namespace APIBooks.Controllers
 
         // PUT api/<BooksController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] string b)
+        public async Task<IActionResult> Put(int id, [FromBody] Models.DTOs.Book.Book book)
         {
             try
             {
+                var respuesta = await BookManager.Existe(id);
 
-                return Ok();
+                if (!respuesta)
+                    return NotFound();
+
+                var Book = await BookManager.Editar(id, book);
+
+                return Ok(Book);
             }
             catch (Exception ex)
             {
@@ -81,12 +95,18 @@ namespace APIBooks.Controllers
 
         // DELETE api/<BooksController>/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string codigo)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
+                var respuesta = await BookManager.Existe(id);
 
-                return Ok();
+                if (!respuesta)
+                    return NotFound();
+
+                var Book = await BookManager.Eliminar(id);
+
+                return Ok(Book);
             }
             catch (Exception ex)
             {

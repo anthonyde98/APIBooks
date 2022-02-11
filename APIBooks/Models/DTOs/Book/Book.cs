@@ -10,7 +10,7 @@ namespace APIBooks.Models.DTOs.Book
         public string Titulo { get; set; }
         public string Editorial { get; set; }
         public string Autor { get; set; }
-        public DateTime FechaPublicacion { get; set; }
+        public string FechaPublicacion { get; set; }
         public decimal Precio { get; set; }
     }
 }
